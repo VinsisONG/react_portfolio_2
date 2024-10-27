@@ -48,8 +48,8 @@ const Skills = () => {
         </div>
         <br />
         <ul className="list-decimal px-4 font-Poppins sm:text-sm text-xs !leading-7">
-          <li>Lorem ipsum dolor sit, amet consectetur adipisicing.</li>
-          <li>Lorem ipsum dolor sit, ame.</li>
+          <li></li>
+          <li></li>
           <li>Lorem ipsum dolor sit, amet consectetur</li>
           <li>
             Lorem ipsum dolor sit, amet dolor sit, amet consectetur adipisicing.

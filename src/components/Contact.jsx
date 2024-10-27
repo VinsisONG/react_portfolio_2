@@ -1,27 +1,65 @@
-import { createElement, useRef } from "react";
+import { createElement, useRef, useState } from "react";
 import { content } from "../Content";
 import emailjs from "@emailjs/browser";
 import toast, { Toaster } from "react-hot-toast";
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Contact = () => {
   const { Contact } = content;
   const form = useRef();
+  const recaptcha = useRef();
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
 
   // Sending Email
   const sendEmail = (e) => {
     e.preventDefault();
 
+    if (!recaptchaToken) {
+      toast.error("Please complete the CAPTCHA");
+      return;
+    }
+
+    async function submitForm(event) {
+      event.preventDefault()
+      const captchaValue = recaptcha.current.getValue()
+      if (!captchaValue) {
+        toast.error('Please verify the reCAPTCHA!')
+      } else {
+        const res = await fetch('http://localhost:8000/verify', {
+          method: 'POST',
+          body: JSON.stringify({ captchaValue: recaptchaToken }),
+          headers: {
+            'content-type': 'application/json',
+          },
+        })
+        const data = await res.json()
+        if (data.success) {
+          // make form submission
+          toast.success('Form submission successful!')
+        } if (!data.success) {
+          toast.error('reCAPTCHA validation failed!')
+        }
+      }
+    }
+
+    
     emailjs
       .sendForm(
-      'YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY'
+        'service_ubvhvst', 'template_u6qcjvp', form.current, 'RRY8DEaikVgd3R4sX'
       )
       .then(
         (result) => {
           console.log(result.text);
           // Clear all input field values
           form.current.reset();
+          // Reset the reCAPTCHA token
+          setRecaptchaToken(null);
           // Success toast message
-          toast.success("Email send Successfully");
+          toast.success("Email sent successfully");
         },
         (error) => {
           console.log(error.text);
@@ -48,7 +86,6 @@ const Contact = () => {
             data-aos="fade-up"
             className="flex-1 flex flex-col gap-5"
           >
-            {/* Input Name as same as email js templates values */}
             <input
               type="text"
               name="from_name"
@@ -70,9 +107,13 @@ const Contact = () => {
               className="border border-slate-600 p-3 rounded h-44"
               required
             ></textarea>
+            <ReCAPTCHA
+              ref={recaptcha}
+              sitekey={"6Lc0yWwqAAAAAJ-vrWCA5xP2tLD2cc5LpbnCHA82"}
+              onChange={handleRecaptchaChange}
+            />
             <button
-              className="btn self-start
-            bg-white text-dark_primary"
+              className="btn self-start bg-white text-dark_primary"
             >
               Submit
             </button>
@@ -86,7 +127,7 @@ const Contact = () => {
                 className="flex items-center gap-2"
               >
                 <h4 className="text-white">{createElement(content.icon)}</h4>
-                <a className="font-Poppins" href={content.link} target="_blank">
+                <a className="font-Poppins" href={content.link} target="_blank" rel="noopener noreferrer">
                   {content.text}
                 </a>
               </div>
