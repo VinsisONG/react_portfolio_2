@@ -149,11 +149,7 @@ export const content = {
     title: "Contact Me",
     subtitle: "GET IN TOUCH",
     social_media: [
-      {
-        text: "vinsisr@gmail.com",
-        icon: GrMail,
-        link: "mailto:vinsisr@gmail.com",
-      },
+      
       {
         text: "+371 29 416 014",
         icon: MdCall,
