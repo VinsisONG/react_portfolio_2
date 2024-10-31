@@ -1,15 +1,42 @@
+import { useState } from "react";
 import { content } from "../Content";
-// Import Swiper React components
+import Modal from "react-modal";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
 import { Pagination } from "swiper";
+
+const customModalStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    maxWidth: "23rem",
+    width: "90%",
+  },
+  overlay: {
+    padding: "2rem",
+  },
+};
+Modal.setAppElement("#root");
 
 const Projects = () => {
   const { Projects } = content;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  function openModal(project) {
+    setSelectedProject(project);
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }
+
   return (
     <section className="bg-bg_light_primary" id="projects">
       <div className="md:container px-5 pt-14 flex flex-col justify-between">
@@ -30,9 +57,7 @@ const Projects = () => {
             className="max-w-[45vw] min-w-[22rem]"
           />
           <Swiper
-            pagination={{
-              clickable: true,
-            }}
+            pagination={{ clickable: true }}
             data-aos="fade-left"
             spaceBetween={20}
             modules={[Pagination]}
@@ -46,7 +71,10 @@ const Projects = () => {
                 <img src={content.image} alt="..." />
                 <div className="flex flex-col gap-1 mt-2">
                   <h5 className="font-bold font-Poppins">{content.title}</h5>
-                  <button className="font-bold text-gray self-end">
+                  <button
+                    onClick={() => openModal(content)}
+                    className="font-bold text-gray self-end "
+                  >
                     READ MORE
                   </button>
                 </div>
@@ -55,6 +83,30 @@ const Projects = () => {
           </Swiper>
         </div>
       </div>
+
+      {/* Modal for project details */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customModalStyles}
+      >
+        {selectedProject && (
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <img className="h-10" src={selectedProject.image} alt="..." />
+              <h6>{selectedProject.title}</h6>
+            </div>
+            <p className="font-Poppins text-sm leading-6">
+              {selectedProject.description}
+            </p>
+            <div className="flex justify-end mt-4">
+              <button onClick={closeModal} className="btn">
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </section>
   );
 };

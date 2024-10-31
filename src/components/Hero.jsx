@@ -1,6 +1,6 @@
-// import content
 import { useEffect } from "react";
 import { content } from "../Content";
+
 const Hero = () => {
   const { hero } = content;
 
@@ -23,7 +23,12 @@ const Hero = () => {
           <h2>{hero.title}</h2>
           <br />
           <div className="flex justify-end">
-            <button className="btn">{hero.btnText}</button>
+            <button 
+              className="btn"
+              onClick={() => window.open(hero.btnLink, "_blank", "noopener noreferrer")}
+            >
+              {hero.btnText}
+            </button>
           </div>
           <div className="flex flex-col gap-10 mt-10">
             {hero.hero_content.map((content, i) => (
@@ -32,7 +37,7 @@ const Hero = () => {
                 data-aos="fade-down"
                 data-aos-delay={i * 300}
                 className={`flex items-center w-80 gap-5
-            ${i === 1 && " flex-row-reverse text-right"}  `}
+                ${i === 1 && " flex-row-reverse text-right"}  `}
               >
                 <h3>{content.count}</h3>
                 <p>{content.text}</p>

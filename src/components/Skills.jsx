@@ -1,7 +1,5 @@
-// import content
 import { createElement, useState } from "react";
 import { content } from "../Content";
-// import modal package
 import Modal from "react-modal";
 
 const customStyles = {
@@ -34,6 +32,8 @@ const Skills = () => {
     setIsOpen(false);
   }
 
+  const description = selectSkill?.description || "No description available."; // Set the description
+
   return (
     <section className="min-h-fit bg-bg_light_primary" id="skills">
       {/* modal */}
@@ -43,22 +43,13 @@ const Skills = () => {
         style={customStyles}
       >
         <div className="flex items-center gap-2">
-          <img className="h-10" src={selectSkill?.logo} alt="..." />
+          <img className="h-10" src={selectSkill?.logo} alt={selectSkill?.name} />
           <h6>{selectSkill?.name}</h6>
         </div>
         <br />
-        <ul className="list-decimal px-4 font-Poppins sm:text-sm text-xs !leading-7">
-          <li></li>
-          <li></li>
-          <li>Lorem ipsum dolor sit, amet consectetur</li>
-          <li>
-            Lorem ipsum dolor sit, amet dolor sit, amet consectetur adipisicing.
-          </li>
-          <li>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad est
-            beatae quos rem.
-          </li>
-        </ul>
+        <p className="px-4 font-Poppins sm:text-sm text-xs !leading-7">
+          {description}
+        </p>
         <br />
         <div className="flex justify-end">
           <button onClick={closeModal} className="btn">
@@ -68,7 +59,7 @@ const Skills = () => {
       </Modal>
 
       {/* content */}
-      <div className="md:container px-5  py-14">
+      <div className="md:container px-5 py-14">
         <h2 className="title" data-aos="fade-down">
           {skills.title}
         </h2>
@@ -80,6 +71,13 @@ const Skills = () => {
           {skills.skills_content.map((skill, i) => (
             <div
               key={i}
+              onClick={() => {
+                setSelectSkill(skill);
+                openModal();
+                if (skill.link) {
+                  window.open(skill.link, "_blank", "noopener noreferrer");
+                }
+              }}
               data-aos="fade-up"
               data-aos-delay={i * 400}
               className="bg-white sm:cursor-pointer 
@@ -97,7 +95,8 @@ const Skills = () => {
                 <h6>{skill.name}</h6>
                 <p className="italic">{skill.para}</p>
                 <div
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering the div's onClick
                     setSelectSkill(skill);
                     openModal();
                   }}

@@ -56,6 +56,7 @@ export const content = {
     firstName: "VINSENTS",
     LastName: "ROMEIKO",
     btnText: "Hire Me",
+    btnLink: "https://www.wolframalpha.com/input?i=%28x%5E2+%2B+y%5E2%29%28z%5E2+%2B+1%29+%2B+4*x*y*z+%2B+%28x+%2B+y%29*%28z+%2B+1%29",
     image: Hero_person,
     hero_content: [
       {
@@ -76,16 +77,20 @@ export const content = {
         name: "Adobe Premiere Pro",
         para: "",
         logo: figma,
+        description: "Adobe premiere pro, sito es rakstiju blablabla"
       },
       {
         name: "Adobe Photoshop",
         para: "",
         logo: ps,
+        description: "Adobe photoshop, sito es rakstiju blablabla"
       },
       {
         name: "Python",
         para: "",
         logo: python,
+        description: "python, sito es rakstiju blablabla",
+        link:'https://github.com/VinsisONG'
       },
       
     ],
@@ -99,21 +104,25 @@ export const content = {
         title: "Video Editing",
         para: "",
         logo: services_logo1,
+        link: "https://www.e-klase.lv/"
       },
       {
         title: "Tutoring",
         para: "",
         logo: services_logo2,
+        link: "https://www.wolframalpha.com/input?i=%28x%5E2+%2B+y%5E2%29%28z%5E2+%2B+1%29+%2B+4*x*y*z+%2B+%28x+%2B+y%29*%28z+%2B+1%29"
       },
       {
         title: "PhotoShop Editing",
         para: "",
         logo: services_logo3,
+        link: "https://www.e-klase.lv/"
       },
       {
         title: "Gym Training",
         para: "",
         logo: services_logo4,
+        link: "https://www.e-klase.lv/"
       },
     ],
   },
@@ -125,14 +134,17 @@ export const content = {
       {
         title: "x",
         image: project1,
+        description:"es sito sarakstiju diezgan atri,",
       },
       {
         title: "y",
         image: project2,
+        description:"sito ari",
       },
       {
         title: "z",
         image: project3,
+        description:"sito bikit lenak,"
       },
     ],
   },
@@ -144,6 +156,7 @@ export const content = {
     image2: Hireme_person2,
     para: "I'm a reliable student, who can get things done!",
     btnText: "Hire Me",
+
   },
   Contact: {
     title: "Contact Me",
